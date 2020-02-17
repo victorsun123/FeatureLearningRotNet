@@ -267,8 +267,7 @@ class Algorithm():
 
     def evaluate(self, dloader):
         self.logger.info('Evaluating: %s' % os.path.basename(self.exp_dir))
-
-	self.dloader = dloader
+        self.dloader = dloader
         self.dataset_eval = dloader.dataset
         self.logger.info('==> Dataset: %s [%d images]' % (dloader.dataset.name, len(dloader)))
         for key, network in self.networks.items():
@@ -304,19 +303,19 @@ class Algorithm():
         self.best_epoch = None
 
     def keep_record_of_best_model(self, eval_stats, current_epoch):
-	if self.keep_best_model_metric_name is not None:
-            metric_name = self.keep_best_model_metric_name
-            if (metric_name not in eval_stats):
-                raise ValueError('The provided metric {0} for keeping the best model is not computed by the evaluation routine.'.format(metric_name))
-            metric_val = eval_stats[metric_name]
-            if self.max_metric_val is None or metric_val > self.max_metric_val:
-                self.max_metric_val = metric_val
-                self.best_stats = eval_stats
-                self.save_checkpoint(self.curr_epoch+1, suffix='.best')
-                if self.best_epoch is not None:
-                    self.delete_checkpoint(self.best_epoch+1, suffix='.best')
-                self.best_epoch = current_epoch
-                self.print_eval_stats_of_best_model()
+    	if self.keep_best_model_metric_name is not None:
+                metric_name = self.keep_best_model_metric_name
+                if (metric_name not in eval_stats):
+                    raise ValueError('The provided metric {0} for keeping the best model is not computed by the evaluation routine.'.format(metric_name))
+                metric_val = eval_stats[metric_name]
+                if self.max_metric_val is None or metric_val > self.max_metric_val:
+                    self.max_metric_val = metric_val
+                    self.best_stats = eval_stats
+                    self.save_checkpoint(self.curr_epoch+1, suffix='.best')
+                    if self.best_epoch is not None:
+                        self.delete_checkpoint(self.best_epoch+1, suffix='.best')
+                    self.best_epoch = current_epoch
+                    self.print_eval_stats_of_best_model()
 
     def print_eval_stats_of_best_model(self):
         if self.best_stats is not None:
